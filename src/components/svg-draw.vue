@@ -11,7 +11,8 @@
       <div class="q-right" >
           <svg @mousedown="rootMouseDown" @mouseleave="rootMouseUp" @mouseup="rootMouseUp" @mousemove="rootMouseMove"
           xmlns="http://www.w3.org/2000/svg" :class="rootCursor===0?'root-cursor':'root-add-cursor'"  version="1.1" id="root-svg">
-            
+
+           
             
             <rect v-if="rootCursor===1 && drawRect.mouseDown && drawRect.rect[0]" 
               v-for="item in drawRect.rect"
@@ -24,6 +25,7 @@
              ></rect>
 
              <rect  v-for="(item,index) in drawRect.rectList"
+             @mousedown="selMouseDown" @mouseleave="selMouseUp" @mouseup="selMouseUp" @mousemove="selMouseMove"
              class="q-pointer-all" fill="rgba(255,255,255,0.1)" stroke="#111" stroke-width="1" 
              :x="item.x" 
              :y="item.y" 
@@ -59,29 +61,46 @@
                       
                       <rect  width="8" height="8"  style="cursor:nw-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][0].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][0].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][0].y:0"
+                          @mousedown="resizeMouseDown($event,0)" @mouseleave="resizeMouseUp($event,0)" @mouseup="resizeMouseUp($event,0)" @mousemove="resizeMouseMove($event,0)"
+                        
+                        ></rect>
                      
                       <rect  width="8" height="8"  style="cursor:n-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][1].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][1].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][1].y:0"
+                          @mousedown="resizeMouseDown($event,1)" @mouseleave="resizeMouseUp($event,1)" @mouseup="resizeMouseUp($event,1)" @mousemove="resizeMouseMove($event,1)"
+                        ></rect>
                       <rect  width="8" height="8"  style="cursor:ne-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][2].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][2].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][2].y:0"
+                          @mousedown="resizeMouseDown($event,2)" @mouseleave="resizeMouseUp($event,2)" @mouseup="resizeMouseUp($event,2)" @mousemove="resizeMouseMove($event,2)"
+                        ></rect>
                       <rect  width="8" height="8"  style="cursor:e-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][3].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][3].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][3].y:0"
+                          @mousedown="resizeMouseDown($event,3)" @mouseleave="resizeMouseUp($event,3)" @mouseup="resizeMouseUp($event,3)" @mousemove="resizeMouseMove($event,3)"
+                        ></rect>
                       <rect  width="8" height="8"  style="cursor:se-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][4].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][4].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][4].y:0"
+                          @mousedown="resizeMouseDown($event,4)" @mouseleave="resizeMouseUp($event,4)" @mouseup="resizeMouseUp($event,4)" @mousemove="resizeMouseMove($event,4)"
+                        ></rect>
                       <rect  width="8" height="8"  style="cursor:s-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][5].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][5].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][5].y:0"
+                          @mousedown="resizeMouseDown($event,5)" @mouseleave="resizeMouseUp($event,5)" @mouseup="resizeMouseUp($event,5)" @mousemove="resizeMouseMove($event,5)"
+                        ></rect>
                       <rect  width="8" height="8"  style="cursor:sw-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][6].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][6].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][6].y:0"
+                          @mousedown="resizeMouseDown($event,6)" @mouseleave="resizeMouseUp($event,6)" @mouseup="resizeMouseUp($event,6)" @mousemove="resizeMouseMove($event,6)"
+                        ></rect>
                       <rect  width="8" height="8"  style="cursor:w-resize"  
                         :x="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][7].x:0" 
-                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][7].y:0"></rect>
+                        :y="drawRect.actRect[selectedIndex]&& drawRect.actRect[selectedIndex][0]?drawRect.actRect[selectedIndex][7].y:0"
+                          @mousedown="resizeMouseDown($event,7)" @mouseleave="resizeMouseUp($event,7)" @mouseup="resizeMouseUp($event,7)" @mousemove="resizeMouseMove($event,7)"
+                        ></rect>
                        
                     </g>
                   
@@ -128,6 +147,8 @@ export default {
       selectedIndex:-1,//选中的下标
       posX:0,//按下鼠标后，鼠标与选中元素x坐标的距离
       posY:0,//按下鼠标后，鼠标与选中元素y坐标的距离
+      resizeOld:{p1:{},p2:{}},//缩放前坐标
+      resizePx:{x:-1,y:0}//缩放固定点
     }
   },
   methods:{
@@ -152,6 +173,8 @@ export default {
     rectSel(_index){
       if(this.rootCursor===0){
         this.selectedIndex=_index;
+        this.cursorPointer.x=this.drawRect.rectList[_index].x;
+        this.cursorPointer.y=this.drawRect.rectList[_index].y;
       }
     },
     rootMouseUp(e){
@@ -215,25 +238,25 @@ export default {
          8   4
          7 6 5
       */
-      _list.push({x:p1.x-4,y:p1.y-4});//1
-      _list.push({x:p1.x+(p2.x-p1.x)/2-4,y:p1.y-4});//2
-      _list.push({x:p2.x-4,y:p1.y-4});//3
+      _list.push({x:p1.x-5,y:p1.y-5});//1
+      _list.push({x:p1.x+(p2.x-p1.x)/2-4,y:p1.y-5});//2
+      _list.push({x:p2.x-5,y:p1.y-5});//3
 
-      _list.push({x:p2.x-4,y:p1.y+(p2.y-p1.y)/2-4});//4
+      _list.push({x:p2.x-5,y:p1.y+(p2.y-p1.y)/2-5});//4
 
-      _list.push({x:p2.x-4,y:p2.y-4});//5
-      _list.push({x:p1.x-4+(p2.x-p1.x)/2,y:p2.y-4});//6
-      _list.push({x:p1.x-4,y:p2.y-4});//7
+      _list.push({x:p2.x-5,y:p2.y-5});//5
+      _list.push({x:p1.x-5+(p2.x-p1.x)/2,y:p2.y-5});//6
+      _list.push({x:p1.x-5,y:p2.y-5});//7
 
-      _list.push({x:p1.x-4,y:p1.y+(p2.y-p1.y)/2-4});//8
+      _list.push({x:p1.x-5,y:p1.y+(p2.y-p1.y)/2-5});//8
       return _list;
     },
     //获取操作路径
     getPath(p1={x:0,y:0},p2={x:0,y:0}){
-      let x1=p1.x<p2.x?p1.x-1:p2.x-1;
-      let y1=p1.x<p2.x?p1.y-1:p2.y-1;
-      let x2=p1.x<p2.x?p2.x+1:p1.x+1;
-      let y2=p1.x<p2.x?p2.y+1:p1.y+1;
+      let x1=p1.x<p2.x?p1.x-1.5:p2.x-1.5;
+      let y1=p1.x<p2.x?p1.y-1.5:p2.y-1.5;
+      let x2=p1.x<p2.x?p2.x+1.5:p1.x+1.5;
+      let y2=p1.x<p2.x?p2.y+1.5:p1.y+1.5;
       return `M${x1},${y1},L${x2},${y1},${x2},${y2},${x1},${y2}z`
     },
     getRect(x1,y1,x2,y2){
@@ -256,24 +279,247 @@ export default {
       }
       return _list;
     },
+    //移动后矩形的位置
+    setMoveRect(p1={x:0,y:0},p2={x:0,y:0}){
+      let self=this;
+      //选中的矩形
+      let _list=[];
+      this.drawRect.rectList.forEach((item,index)=>{
+        let _item=item;
+        if(index===self.selectedIndex){
+          let _rect=self.getRect(p1.x,p1.y,p2.x,p2.y);
+          _item=_rect[0];
+          console.log('rect:',_item,p1,p2);
+        }
+        _list.push(_item);
+      })
+      this.drawRect.rectList=_list;
+      //操作的路径
+      let _path=[];
+      this.drawRect.pathList.forEach((pathItem,pathIndex)=>{
+          let _pathItem=pathItem;
+          if(pathIndex===self.selectedIndex){
+            _pathItem=self.getPath(p1,p2);
+          }
+          _path.push(_pathItem);
+      })
+      this.drawRect.pathList=_path;
+      //操作的矩形
+      let _actRect=[];
+      this.drawRect.actRect.forEach((actItem,actIndex)=>{
+          let _actItem=actItem;
+          if(actIndex===self.selectedIndex){
+            _actItem=self.getActRect(p1,p2);
+          }
+          _actRect.push(_actItem);
+      })
+      this.drawRect.actRect=_actRect;
+      //旋转的圆形
+      let _actCircle=[];
+      this.drawRect.actCircle.forEach((actCircleItem,actCircleIndex)=>{
+          let _actCircleItem=actCircleItem;
+          if(actCircleIndex===self.selectedIndex){
+            _actCircleItem=self.getActCircle(p1,p2);
+          }
+          _actCircle.push(_actCircleItem);
+      })
+      this.drawRect.actCircle=_actCircle;
+
+    },
     selMouseUp(e){
       this.mouseDown=false;
-      console.log('mouseUp:',this.mouseDown);
+      //console.log('mouseUp:',this.mouseDown);
+      if(this.rootCursor===0){
+        let p2={};
+        if(this.selectedIndex>-1){
+          p2.x=this.cursorPointer.x+this.drawRect.rectList[this.selectedIndex].width;
+          p2.y=this.cursorPointer.y+this.drawRect.rectList[this.selectedIndex].height;
+          this.setMoveRect(this.cursorPointer,p2);
+        }
+      }
     },
     selMouseDown(e){
       this.mouseDown=true;
-      this.posX=e.offsetX-this.cursorPointer.x;
-      this.posY=e.offsetY-this.cursorPointer.y;
-      console.log('mouseDown:',this.mouseDown);
+      if(this.rootCursor===0){
+        this.posX=e.offsetX-this.cursorPointer.x;
+        this.posY=e.offsetY-this.cursorPointer.y;
+      }
+      //console.log('mouseDown:',this.mouseDown);
       
     },
     selMouseMove(e){
       
-      if(this.mouseDown){
+      if(this.mouseDown && this.rootCursor===0){
 
         this.cursorPointer.x=e.offsetX-this.posX;
         this.cursorPointer.y=e.offsetY-this.posY;
-        //console.log('move:',e.offsetX,e.offsetY,this.cursorPointer.x,this.cursorPointer.y);
+        let p2={};
+        if(this.selectedIndex>-1){
+          p2.x=this.cursorPointer.x+this.drawRect.rectList[this.selectedIndex].width;
+          p2.y=this.cursorPointer.y+this.drawRect.rectList[this.selectedIndex].height;
+          this.setMoveRect(this.cursorPointer,p2);
+        }
+       // console.log('move:',this.cursorPointer.x,this.cursorPointer.y);
+      }
+    },
+    resizeMouseUp(e,t){
+      console.log('up:');
+      
+      this.mouseDown=false;
+      //console.log('mouseUp:',this.mouseDown);
+      if(this.rootCursor===0 && this.resizePx.x>-1){
+        if(this.selectedIndex>-1){
+          let p1={},p2={};
+          switch(t){
+            case 0:
+              p1=this.cursorPointer;
+              p2=this.resizeOld.p2;
+              break;
+            case 1:
+              p1.x=this.resizeOld.p1.x;
+              p1.y=this.cursorPointer.y;
+              p2=this.resizeOld.p2;
+              break;
+            case 2:
+              p1.x=this.resizeOld.p1.x;
+              p1.y=this.cursorPointer.y;
+              p2.x=this.cursorPointer.x;
+              p2.y=this.resizeOld.p2.y;
+              break;
+            case 3:
+              p1=this.resizeOld.p1;
+              p2.x=this.cursorPointer.x;
+              p2.y=this.resizeOld.p2.y;
+              break;
+            case 4:
+              p1=this.resizeOld.p1;
+              p2=this.cursorPointer;
+              break;
+            case 5:
+              p1=this.resizeOld.p1;
+              p2.x=this.cursorPointer.x;
+              p2.y=this.resizeOld.p2.y;
+              break;
+            case 6:
+              p1.x=this.cursorPointer.x;
+              p1.y=this.resizeOld.p1.y;
+              p2.x=this.resizeOld.p2.x;
+              p2.y=this.cursorPointer.y;
+              break;
+            case 7:
+              p1.x=this.cursorPointer.x;
+              p1.y=this.resizeOld.p1.x;
+              p2=this.resizeOld.p2;
+              break;
+          }
+          console.log('mouseUp:',p1.x,p1.y,p2.x,p2.y);
+          this.setMoveRect(p1,p2);
+        }
+      }
+      this.resizePx.x=-1;
+    },
+    resizeMouseDown(e,t){
+      this.mouseDown=true;
+      if(this.rootCursor===0){
+        let p1={};
+        p1.x=this.drawRect.rectList[this.selectedIndex].x;
+        p1.y=this.drawRect.rectList[this.selectedIndex].y;
+        this.resizePx.x=this.drawRect.rectList[this.selectedIndex].x+this.drawRect.rectList[this.selectedIndex].width;
+        this.resizePx.y=this.drawRect.rectList[this.selectedIndex].y+this.drawRect.rectList[this.selectedIndex].height;
+        this.resizeOld.p1=p1;
+        this.resizeOld.p2=this.resizePx;
+        switch(t){
+          case 0:
+            this.cursorPointer=p1;
+            this.posX=e.offsetX-this.cursorPointer.x;
+            this.posY=e.offsetY-this.cursorPointer.y;
+            break;
+          case 1:
+            this.cursorPointer.x=e.offsetX-p1.x;
+            this.cursorPointer.y=p1.y;
+            this.posX=this.cursorPointer.x;
+            this.posY=this.cursorPointer.y;
+            break;
+          case 2:
+            this.cursorPointer.x=e.offsetX-p1.x;
+            this.cursorPointer.y=e.offsetY-p1.y;
+            this.posX=this.cursorPointer.x;
+            this.posY=this.cursorPointer.y;
+            break;
+          case 3:
+            break;
+          case 4:
+            this.cursorPointer=this.resizePx;
+           
+            this.posX=0;
+            this.posY=0;
+            break;
+          case 5:
+            break;
+          case 6:
+            break;
+          case 7:
+            break;
+        } 
+       
+        console.log('mouseDown:',this.resizeOld.p1.x,this.resizeOld.p1.y,this.resizeOld.p2.x,this.resizeOld.p2.y);
+      }
+      
+      
+    },
+    resizeMouseMove(e,t){
+      console.log('move:');
+      if(this.mouseDown && this.rootCursor===0 && this.resizePx.x>-1){
+
+        this.cursorPointer.x=e.offsetX-this.posX;
+        this.cursorPointer.y=e.offsetY-this.posY;
+        if(this.selectedIndex>-1){
+          let p1={},p2={};
+          switch(t){
+            case 0:
+              p1=this.cursorPointer;
+              p2=this.resizeOld.p2;
+              break;
+            case 1:
+              p1.x=this.resizeOld.p1.x;
+              p1.y=this.cursorPointer.y;
+              p2=this.resizeOld.p2;
+              break;
+            case 2:
+              p1.x=this.resizeOld.p1.x;
+              p1.y=this.cursorPointer.y;
+              p2.x=this.cursorPointer.x;
+              p2.y=this.resizeOld.p2.y;
+              break;
+            case 3:
+              p1=this.resizeOld.p1;
+              p2.x=this.cursorPointer.x;
+              p2.y=this.resizeOld.p2.y;
+              break;
+            case 4:
+              p1=this.resizeOld.p1;
+              p2=this.cursorPointer;
+              break;
+            case 5:
+              p1=this.resizeOld.p1;
+              p2.x=this.cursorPointer.x;
+              p2.y=this.resizeOld.p2.y;
+              break;
+            case 6:
+              p1.x=this.cursorPointer.x;
+              p1.y=this.resizeOld.p1.y;
+              p2.x=this.resizeOld.p2.x;
+              p2.y=this.cursorPointer.y;
+              break;
+            case 7:
+              p1.x=this.cursorPointer.x;
+              p1.y=this.resizeOld.p1.x;
+              p2=this.resizeOld.p2;
+              break;
+          }
+          this.setMoveRect(p1,p2);
+          //console.log('cursorPointer:',this.cursorPointer.x,this.cursorPointer.y);
+        }
       }
     }
   }

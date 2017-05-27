@@ -19,6 +19,11 @@ npm run build --report
 ```
 ## log
 
+### 2017-5-27
+
+1. move rectangular;
+2. resize rectangular;
+
 ### 2017-5-26
 
 1. draw rectangular function development;
